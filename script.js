@@ -1,10 +1,12 @@
 // Sample data (in a real app, this would come from the backend)
+const USD_TO_INR = 83;
+
 let products = [
-    { id: 1, name: 'Premium Coffee Beans', category: 'Beverages', price: 12.99, quantity: 5, supplier: 'Global Foods Ltd.', lowStockThreshold: 10, description: 'High-quality arabica coffee beans' },
-    { id: 2, name: 'Organic Olive Oil', category: 'Cooking', price: 18.50, quantity: 24, supplier: 'Mediterranean Imports', lowStockThreshold: 10, description: 'Extra virgin organic olive oil' },
-    { id: 3, name: 'Handmade Soap', category: 'Personal Care', price: 5.99, quantity: 3, supplier: 'Natural Products Co.', lowStockThreshold: 10, description: 'Natural handmade lavender soap' },
-    { id: 4, name: 'Wireless Earbuds', category: 'Electronics', price: 49.99, quantity: 0, supplier: 'TechGadgets Inc.', lowStockThreshold: 10, description: 'Bluetooth 5.0 wireless earbuds' },
-    { id: 5, name: 'Stainless Steel Water Bottle', category: 'Accessories', price: 24.99, quantity: 15, supplier: 'EcoLiving Supplies', lowStockThreshold: 10, description: 'Insulated stainless steel bottle' }
+    { id: 1, name: 'Premium Coffee Beans', category: 'Beverages', price: 1078.17, quantity: 5, supplier: 'Global Foods Ltd.', lowStockThreshold: 10, description: 'High-quality arabica coffee beans' },
+    { id: 2, name: 'Organic Olive Oil', category: 'Cooking', price: 1535.50, quantity: 24, supplier: 'Mediterranean Imports', lowStockThreshold: 10, description: 'Extra virgin organic olive oil' },
+    { id: 3, name: 'Handmade Soap', category: 'Personal Care', price: 497.17, quantity: 3, supplier: 'Natural Products Co.', lowStockThreshold: 10, description: 'Natural handmade lavender soap' },
+    { id: 4, name: 'Wireless Earbuds', category: 'Electronics', price: 4149.17, quantity: 0, supplier: 'TechGadgets Inc.', lowStockThreshold: 10, description: 'Bluetooth 5.0 wireless earbuds' },
+    { id: 5, name: 'Stainless Steel Water Bottle', category: 'Accessories', price: 2074.17, quantity: 15, supplier: 'EcoLiving Supplies', lowStockThreshold: 10, description: 'Insulated stainless steel bottle' }
 ];
 
 let activities = [
@@ -88,7 +90,7 @@ function handleProductSubmit(e) {
         id: products.length + 1,
         name: document.getElementById('productName').value,
         category: document.getElementById('productCategory').value,
-        price: parseFloat(document.getElementById('productPrice').value),
+        price: parseFloat(document.getElementById('productPrice').value) * USD_TO_INR,
         quantity: parseInt(document.getElementById('productQuantity').value),
         supplier: document.getElementById('productSupplier').value,
         lowStockThreshold: parseInt(document.getElementById('lowStockThreshold').value),
@@ -184,7 +186,7 @@ function getDashboardContent() {
                             <i class="fas fa-box"></i>
                         </div>
                     </div>
-                    <div class="card-value">${totalProducts}</div>
+                    <div class="card-value">₹{totalProducts}</div>
                     <div class="card-text">Active products in inventory</div>
                 </div>
                 <div class="card">
@@ -194,7 +196,7 @@ function getDashboardContent() {
                             <i class="fas fa-exclamation-triangle"></i>
                         </div>
                     </div>
-                    <div class="card-value">${lowStockProducts}</div>
+                    <div class="card-value">₹{lowStockProducts}</div>
                     <div class="card-text">Products need restocking</div>
                 </div>
                 <div class="card">
@@ -204,7 +206,7 @@ function getDashboardContent() {
                             <i class="fas fa-times-circle"></i>
                         </div>
                     </div>
-                    <div class="card-value">${outOfStockProducts}</div>
+                    <div class="card-value">₹{outOfStockProducts}</div>
                     <div class="card-text">Products unavailable</div>
                 </div>
                 <div class="card">
@@ -214,17 +216,17 @@ function getDashboardContent() {
                             <i class="fas fa-dollar-sign"></i>
                         </div>
                     </div>
-                    <div class="card-value">$${totalValue.toFixed(2)}</div>
+                    <div class="card-value">₹₹{totalValue.toFixed(2)}</div>
                     <div class="card-text">Current inventory value</div>
                 </div>
             </div>
 
             <!-- Low Stock Alert -->
-            ${lowStockProducts > 0 ? `
+            ₹{lowStockProducts > 0 ? `
             <div class="alert alert-warning">
                 <i class="fas fa-exclamation-circle"></i>
                 <div>
-                    <strong>Low Stock Alert:</strong> ${lowStockProducts} products are running low and need to be restocked soon.
+                    <strong>Low Stock Alert:</strong> ₹{lowStockProducts} products are running low and need to be restocked soon.
                 </div>
             </div>
             ` : ''}
@@ -245,12 +247,12 @@ function getDashboardContent() {
                             </tr>
                         </thead>
                         <tbody>
-                            ${activities.slice(0, 5).map(activity => `
+                            ₹{activities.slice(0, 5).map(activity => `
                                 <tr>
-                                    <td>${activity.date}</td>
-                                    <td>${activity.activity}</td>
-                                    <td>${activity.product}</td>
-                                    <td>${activity.user}</td>
+                                    <td>₹{activity.date}</td>
+                                    <td>₹{activity.activity}</td>
+                                    <td>₹{activity.product}</td>
+                                    <td>₹{activity.user}</td>
                                 </tr>
                             `).join('')}
                         </tbody>
@@ -263,7 +265,7 @@ function getDashboardContent() {
                 <div class="section-header">
                     <h2 class="section-title">Low Stock Products</h2>
                 </div>
-                ${lowStockProducts > 0 ? `
+                ₹{lowStockProducts > 0 ? `
                 <div class="table-container">
                     <table>
                         <thead>
@@ -275,12 +277,12 @@ function getDashboardContent() {
                             </tr>
                         </thead>
                         <tbody>
-                            ${products.filter(p => p.quantity > 0 && p.quantity <= p.lowStockThreshold).map(product => `
+                            ₹{products.filter(p => p.quantity > 0 && p.quantity <= p.lowStockThreshold).map(product => `
                                 <tr>
-                                    <td>${product.name}</td>
-                                    <td class="low-stock">${product.quantity}</td>
-                                    <td>${product.lowStockThreshold}</td>
-                                    <td>${product.supplier}</td>
+                                    <td>₹{product.name}</td>
+                                    <td class="low-stock">₹{product.quantity}</td>
+                                    <td>₹{product.lowStockThreshold}</td>
+                                    <td>₹{product.supplier}</td>
                                 </tr>
                             `).join('')}
                         </tbody>
@@ -318,7 +320,7 @@ function getProductsContent() {
                             </tr>
                         </thead>
                         <tbody>
-                            ${products.map(product => {
+                            ₹{products.map(product => {
                                 let status = 'status-in-stock';
                                 let statusText = 'In Stock';
                                 
@@ -331,13 +333,13 @@ function getProductsContent() {
                                 }
                                 
                                 return `
-                                <tr data-id="${product.id}">
-                                    <td>${product.name}</td>
-                                    <td>${product.category}</td>
-                                    <td>$${product.price.toFixed(2)}</td>
-                                    <td class="${product.quantity <= product.lowStockThreshold ? 'low-stock' : ''}">${product.quantity}</td>
-                                    <td>${product.supplier}</td>
-                                    <td><span class="status-badge ${status}">${statusText}</span></td>
+                                <tr data-id="₹{product.id}">
+                                    <td>₹{product.name}</td>
+                                    <td>₹{product.category}</td>
+                                    <td>₹₹{product.price.toFixed(2)}</td>
+                                    <td class="₹{product.quantity <= product.lowStockThreshold ? 'low-stock' : ''}">₹{product.quantity}</td>
+                                    <td>₹{product.supplier}</td>
+                                    <td><span class="status-badge ₹{status}">₹{statusText}</span></td>
                                     <td class="action-buttons">
                                         <button class="action-btn edit-btn"><i class="fas fa-edit"></i></button>
                                         <button class="action-btn delete-btn"><i class="fas fa-trash"></i></button>
@@ -377,13 +379,13 @@ function getSuppliersContent() {
                             </tr>
                         </thead>
                         <tbody>
-                            ${suppliers.map(supplier => {
+                            ₹{suppliers.map(supplier => {
                                 const supplierProducts = products.filter(p => p.supplier === supplier);
                                 return `
                                 <tr>
-                                    <td>${supplier}</td>
-                                    <td>${supplierProducts.length} products</td>
-                                    <td>contact@${supplier.toLowerCase().replace(/\s+/g, '')}.com</td>
+                                    <td>₹{supplier}</td>
+                                    <td>₹{supplierProducts.length} products</td>
+                                    <td>contact@₹{supplier.toLowerCase().replace(/\s+/g, '')}.com</td>
                                     <td class="action-buttons">
                                         <button class="action-btn edit-btn"><i class="fas fa-edit"></i></button>
                                         <button class="action-btn delete-btn"><i class="fas fa-trash"></i></button>
@@ -421,21 +423,21 @@ function getReportsContent() {
                         <div class="card-header">
                             <div class="card-title">Products by Category</div>
                         </div>
-                        <div class="card-value">${Object.keys(categoryCount).length}</div>
+                        <div class="card-value">₹{Object.keys(categoryCount).length}</div>
                         <div class="card-text">Categories in inventory</div>
                     </div>
                     <div class="card">
                         <div class="card-header">
                             <div class="card-title">Average Price</div>
                         </div>
-                        <div class="card-value">$${(products.reduce((sum, p) => sum + p.price, 0) / products.length).toFixed(2)}</div>
+                        <div class="card-value">₹₹{(products.reduce((sum, p) => sum + p.price, 0) / products.length).toFixed(2)}</div>
                         <div class="card-text">Average product price</div>
                     </div>
                     <div class="card">
                         <div class="card-header">
                             <div class="card-title">Total Items</div>
                         </div>
-                        <div class="card-value">${products.reduce((sum, p) => sum + p.quantity, 0)}</div>
+                        <div class="card-value">₹{products.reduce((sum, p) => sum + p.quantity, 0)}</div>
                         <div class="card-text">Total items in stock</div>
                     </div>
                 </div>
@@ -444,14 +446,14 @@ function getReportsContent() {
                     <div class="form-group">
                         <h3>Stock Value by Category</h3>
                         <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin-top: 15px;">
-                            ${Object.entries(categoryCount).map(([category, count]) => `
+                            ₹{Object.entries(categoryCount).map(([category, count]) => `
                                 <div style="margin-bottom: 10px;">
                                     <div style="display: flex; justify-content: between; margin-bottom: 5px;">
-                                        <span>${category}</span>
-                                        <span>${count} products</span>
+                                        <span>₹{category}</span>
+                                        <span>₹{count} products</span>
                                     </div>
                                     <div style="height: 10px; background: #e9ecef; border-radius: 5px; overflow: hidden;">
-                                        <div style="height: 100%; background: var(--primary); width: ${(count / products.length) * 100}%"></div>
+                                        <div style="height: 100%; background: var(--primary); width: ₹{(count / products.length) * 100}%"></div>
                                     </div>
                                 </div>
                             `).join('')}
@@ -464,28 +466,28 @@ function getReportsContent() {
                             <div style="margin-bottom: 10px;">
                                 <div style="display: flex; justify-content: between; margin-bottom: 5px;">
                                     <span>In Stock</span>
-                                    <span>${products.filter(p => p.quantity > p.lowStockThreshold).length} products</span>
+                                    <span>₹{products.filter(p => p.quantity > p.lowStockThreshold).length} products</span>
                                 </div>
                                 <div style="height: 10px; background: #e9ecef; border-radius: 5px; overflow: hidden;">
-                                    <div style="height: 100%; background: var(--success); width: ${(products.filter(p => p.quantity > p.lowStockThreshold).length / products.length) * 100}%"></div>
+                                    <div style="height: 100%; background: var(--success); width: ₹{(products.filter(p => p.quantity > p.lowStockThreshold).length / products.length) * 100}%"></div>
                                 </div>
                             </div>
                             <div style="margin-bottom: 10px;">
                                 <div style="display: flex; justify-content: between; margin-bottom: 5px;">
                                     <span>Low Stock</span>
-                                    <span>${products.filter(p => p.quantity > 0 && p.quantity <= p.lowStockThreshold).length} products</span>
+                                    <span>₹{products.filter(p => p.quantity > 0 && p.quantity <= p.lowStockThreshold).length} products</span>
                                 </div>
                                 <div style="height: 10px; background: #e9ecef; border-radius: 5px; overflow: hidden;">
-                                    <div style="height: 100%; background: var(--warning); width: ${(products.filter(p => p.quantity > 0 && p.quantity <= p.lowStockThreshold).length / products.length) * 100}%"></div>
+                                    <div style="height: 100%; background: var(--warning); width: ₹{(products.filter(p => p.quantity > 0 && p.quantity <= p.lowStockThreshold).length / products.length) * 100}%"></div>
                                 </div>
                             </div>
                             <div style="margin-bottom: 10px;">
                                 <div style="display: flex; justify-content: between; margin-bottom: 5px;">
                                     <span>Out of Stock</span>
-                                    <span>${products.filter(p => p.quantity === 0).length} products</span>
+                                    <span>₹{products.filter(p => p.quantity === 0).length} products</span>
                                 </div>
                                 <div style="height: 10px; background: #e9ecef; border-radius: 5px; overflow: hidden;">
-                                    <div style="height: 100%; background: var(--gray); width: ${(products.filter(p => p.quantity === 0).length / products.length) * 100}%"></div>
+                                    <div style="height: 100%; background: var(--gray); width: ₹{(products.filter(p => p.quantity === 0).length / products.length) * 100}%"></div>
                                 </div>
                             </div>
                         </div>
@@ -513,7 +515,7 @@ function getSettingsContent() {
                     <div class="form-group">
                         <label for="currency">Currency</label>
                         <select id="currency">
-                            <option value="USD">US Dollar ($)</option>
+                            <option value="USD">US Dollar (₹)</option>
                             <option value="EUR">Euro (€)</option>
                             <option value="GBP">British Pound (£)</option>
                         </select>
@@ -569,7 +571,7 @@ function deleteProduct(productId) {
             id: activities.length + 1,
             date: new Date().toLocaleString(),
             activity: 'Product deleted',
-            product: `Product ID: ${productId}`,
+            product: `Product ID: ₹{productId}`,
             user: 'Current User'
         });
         
